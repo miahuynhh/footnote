@@ -1,14 +1,13 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var videosRouter = require("./routes/videos"); // Import the video routes
+const indexRouter = require("./routes/index");
+const videosRouter = require("./routes/videos"); // Import the video routes
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -20,29 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Define routes
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
-app.use("/videos", videosRouter); // Place this BEFORE the 404 handler
-
-// Author: Mia
-// TODO: change the following initialize() portion once app actually storing real user
-// data. Currently, tables are being cleared upon initialization every time.
-const { createTables, clearTables } = require('./routes/users');
-
-async function initialize() {
-  try {
-    await createTables();
-    console.log('All tables are initialized');
-
-    await clearTables();
-    console.log('All tables are cleared');
-  } catch (err) {
-    console.log('Error during tables initialization and clearing: ', err);
-  }
-}
-
-initialize();
-////////////////
+app.use("/videos", videosRouter); // Videos route for handling uploads
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

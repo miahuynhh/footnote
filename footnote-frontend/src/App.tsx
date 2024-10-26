@@ -1,13 +1,16 @@
-import LoginSignup from "./components/LoginSignup/LoginSignup";
+import { Routes, Route } from "react-router-dom";
+import CreateNewProject from "./components/CreateNewProject/CreateNewProject";
 import Homepage from "./components/Projects/Homepage";
+import Project from "./components/Project/Project";
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div>
-      {/* <LoginSignup /> */}
-      <Homepage />
-    </div>
+    <Routes>
+      <Route path="/" element={<Homepage />} />
+      <Route path="/projects/new" element={<CreateNewProject />} />
+      <Route path="/projects/:pid" element={<Project />} />
+    </Routes>
   );
-}
+};
 
 export default App;
