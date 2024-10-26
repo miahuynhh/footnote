@@ -1,11 +1,11 @@
 import LoginSignup from "./components/LoginSignup/LoginSignup";
-import VideoList from "./components/VideoList/VideoList";
-import VideoPlayback from "./components/VideoPlayback/VideoPlayback";
+import Homepage from "./components/Projects/Homepage";
 
 function App() {
   return (
     <div>
-      <LoginSignup />
+      {/* <LoginSignup /> */}
+      <Homepage />
     </div>
   );
 }
