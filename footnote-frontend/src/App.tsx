@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import CreateNewProject from "./components/CreateNewProject/CreateNewProject";
-import Homepage from "./components/Projects/Homepage";
+import Homepage from "./components/Homepage/Homepage";
 import Project from "./components/Project/Project";
 
 const App: React.FC = () => {

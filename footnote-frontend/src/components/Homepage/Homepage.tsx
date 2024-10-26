@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./Homepage.css";
 
 interface Project {
   pid: string; // Unique identifier for the project in the database
@@ -22,13 +23,12 @@ const Homepage: React.FC = () => {
 
   /**
    * Fetches the user's projects from the backend when the component mounts.
-   * Ensures that the response is an array before setting it in state.
    */
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const { data } = await axios.get("/api/projects"); // API call to get user's projects
-        setProjects(Array.isArray(data) ? data : []); // Ensure data is an array
+        const { data } = await axios.get("/api/projects"); // API call to backend
+        setProjects(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error("Error fetching projects:", err);
         setError("Failed to load projects.");
@@ -52,24 +52,49 @@ const Homepage: React.FC = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="projects-grid">
-      {/* Button to create a new project */}
-      <div className="project-tile create-new">
-        <button type="button" onClick={handleCreateNewProject}>
-          <span className="plus-sign">+</span>
-          <span>Create New</span>
-        </button>
-      </div>
+    <div className="projects-container">
+      {Array.from({ length: 3 }).map((_, index) => {
+        const project = projects[index];
 
-      {/* Display each project with thumbnail and title, linking to the project details */}
-      {projects.map(({ pid, thumbnailUrl, title }) => (
-        <div className="project-tile" key={pid}>
-          <Link to={`/projects/${pid}`}>
-            <img src={thumbnailUrl} alt={`Thumbnail for ${title}`} />
-            <div className="project-title">{title}</div>
-          </Link>
-        </div>
-      ))}
+        return (
+          <div className="card project-card" key={index}>
+            {project ? (
+              <>
+                <img
+                  src={project.thumbnailUrl}
+                  className="card-img-top"
+                  alt={`Thumbnail for ${project.title}`}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{project.title}</h5>
+                  <p className="card-text">
+                    Click below to view project details.
+                  </p>
+                  <Link
+                    to={`/projects/${project.pid}`}
+                    className="btn btn-primary"
+                  >
+                    View Project
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="card-body empty-card">
+                  <h5 className="card-title">Create New Project</h5>
+                  <button
+                    type="button"
+                    className="btn btn-primary create-btn"
+                    onClick={handleCreateNewProject}
+                  >
+                    <span className="plus-sign">+</span> Create New
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
