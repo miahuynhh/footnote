@@ -87,7 +87,7 @@ const Homepage: React.FC = () => {
                     className="btn btn-primary create-btn"
                     onClick={handleCreateNewProject}
                   >
-                    <span className="plus-sign">+</span> Create New
+                    <span className="plus-sign"></span> Create New
                   </button>
                 </div>
               </>
