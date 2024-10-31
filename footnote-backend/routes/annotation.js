@@ -1,57 +1,11 @@
 var express = require('express');
-var router = express.Router();
-const db = require('./database')
-const Annotation = require('../createTables.sql'); // Using Annotation model from createTables.sql
-
-
-// const express = require('express');
-// const conn = require('../services/database');
-// const bcrypt = require('bcrypt');
+const connAnno = require('../services/database');
+const bcrypt = require('bcrypt');
 // const router = express.Router();
-
+// const db = require('./database')
+// const Annotation = require('../createTables.sql'); // Using Annotation model from createTables.sql
 
 // Author: Lauren
-// Create a new blank annotation
-const createAnnotation = (req, res) => {
-    try {
-        const { pid, timestamp } = req.body;
-
-        // Assuming you have a function to get the next available aid
-        const getNextAid = async () => {
-            const lastAnnotation = await db.query('SELECT MAX(aid) AS lastAid FROM annotations WHERE pid = ?', [pid]);
-            return lastAnnotation.rows[0].lastAid + 1 || 1;
-        };
-
-        // Create a new annotation instance
-        // the new aid should be 
-        const newAnnotation = new Annotation({
-            aid: nextAid,
-            timestamp,
-            note: '',
-            pid
-        });
-
-
-        // Save the annotation to the database
-        db.query('INSERT INTO annotations (aid, timestamp, note, pid) VALUES (?, ?, ?, ?)',
-                [newAnnotation.aid, newAnnotation.timestamp, newAnnotation.note, newAnnotation.pid],
-                (err, result) => {
-                if (err) {
-                    console.error(err);
-                    res.status(500).json({ message: 'Error creating annotation' });
-                } else {
-                    res.status(201).json(newAnnotation);
-                }
-                });
-
-        res.status(201).json(annotation);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error creating annotation' });
-    }
-
-};
-
 // Create a new blank annotation
 async function annotationCreate(pid, timestamp) {
     const checkExistingSql = 'SELECT * FROM ANNOTATIONS WHERE pid = ? AND timestamp = ?';
@@ -59,19 +13,19 @@ async function annotationCreate(pid, timestamp) {
   
     try {
       // check if annotation already exists
-      const [existingAnnotation] = await conn.promise().query(checkExistingSql, [pid, timestamp]);
+      const [existingAnnotation] = await connAnno.promise().query(checkExistingSql, [pid, timestamp]);
   
       if (existingAnnotation.length > 0) {
         return "Annotation already exists at this time";
       }
   
       // get the last annotation ID
-      const [lastAnnotation] = await conn.promise().query('SELECT MAX(aid) AS last_aid FROM ANNOTATIONS');
+      const [lastAnnotation] = await connAnno.promise().query('SELECT MAX(aid) AS last_aid FROM ANNOTATIONS');
       const lastAid = lastAnnotation[0].last_aid || 0; // if no annotations exist, lastAid will be 0
   
       // create a new annotation
       const newAid = lastAid + 1;
-      await conn.promise().query(createAnnotationSql, [pid, timestamp, '']);
+      await connAnno.promise().query(createAnnotationSql, [pid, timestamp, '']);
   
       return "Created annotation " + newAid + "\n";
     } catch (err) {
@@ -86,7 +40,7 @@ async function annotationEdit(pid, timestamp) {
   
     try {
       // check if annotation already exists
-      const [existingAnnotation] = await conn.promise().query(checkExistingSql, [pid, timestamp]);
+      const [existingAnnotation] = await connAnno.promise().query(checkExistingSql, [pid, timestamp]);
   
       if (existingAnnotation.length > 0) {
         return existingAnnotation[0].note;
@@ -106,7 +60,7 @@ async function annotationSave(pid, timestamp, note) {
   
     try {
       // update the existing annotation
-      const [result] = await conn.promise().query(updateAnnotationSql, [note, pid, timestamp]);
+      const [result] = await connAnno.promise().query(updateAnnotationSql, [note, pid, timestamp]);
   
       if (result.affectedRows > 0) {
         return "Annotation saved";
@@ -126,7 +80,7 @@ async function annotationDelete(pid, timestamp) {
   
     try {
       // delete the existing annotation
-      const [result] = await conn.promise().query(deleteAnnotationSql, [pid, timestamp]);
+      const [result] = await connAnno.promise().query(deleteAnnotationSql, [pid, timestamp]);
   
       if (result.affectedRows > 0) {
         return "Annotation deleted";
