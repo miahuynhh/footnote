@@ -11,11 +11,12 @@ interface Props {
 
 const ProjectCard: React.FC<Props> = ({ project, buttonText, onClick }) => {
   const { title, thumbnailURL } = project;
+  const placeholderPic = "https://placehold.co/286x286";
 
   return (
     <div className="holder">
       <Card style={{ width: "18rem" }}>
-        <Card.Img variant="top" src={thumbnailURL} />
+        <Card.Img variant="top" src={thumbnailURL || placeholderPic} />
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Button variant="primary" onClick={onClick}>
