@@ -18,7 +18,7 @@ const ProjectCard: React.FC<Props> = ({ project, buttonText, onClick }) => {
       <Card style={{ width: "18rem" }}>
         <Card.Img variant="top" src={thumbnailURL || placeholderPic} />
         <Card.Body>
-          <Card.Title>{title}</Card.Title>
+          <Card.Title>{title || "untitled"}</Card.Title>
           <Button variant="primary" onClick={onClick}>
             {buttonText}
           </Button>

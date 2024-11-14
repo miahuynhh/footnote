@@ -3,7 +3,7 @@
 // Include methods to create and clear all necessary tables including
 // tables USERS, PROJECTS, ANNOTATIONS, sessions
 
-const conn = require('./database');
+const conn = require("./database");
 
 // Create all necessary tables in Digital Ocean database.
 async function createTables() {
@@ -36,50 +36,50 @@ async function createTables() {
 
   try {
     await conn.promise().query(createUsersTableSql);
-    console.log('USERS table created');
+    console.log("USERS table created");
 
     await conn.promise().query(createProjectsTableSql);
-    console.log('PROJECTS table created');
+    console.log("PROJECTS table created");
 
     await conn.promise().query(createAnnotationsTableSql);
-    console.log('ANNOTATIONS table created');
+    console.log("ANNOTATIONS table created");
   } catch (err) {
-    console.log('Error creating tables: ', err);
+    console.log("Error creating tables: ", err);
   }
 }
 
 // Clear all necessary tables in Digital Ocean database.
 // Not the same as drop tables (this is clearing, not dropping).
 async function clearTables() {
-  const clearUsersTableSql = 'DELETE FROM USERS;';
-  const clearProjectsTableSql = 'DELETE FROM PROJECTS;';
-  const resetProjectsTableSql= 'ALTER TABLE PROJECTS AUTO_INCREMENT = 1;';
-  const clearAnnotationsTableSql = 'DELETE FROM ANNOTATIONS;';
-  const resetAnnotationsTableSql= 'ALTER TABLE ANNOTATIONS AUTO_INCREMENT = 1;';
-  const clearSessionsTableSql = 'DELETE FROM sessions;';
+  const clearUsersTableSql = "DELETE FROM USERS;";
+  const clearProjectsTableSql = "DELETE FROM PROJECTS;";
+  const resetProjectsTableSql = "ALTER TABLE PROJECTS AUTO_INCREMENT = 1;";
+  const clearAnnotationsTableSql = "DELETE FROM ANNOTATIONS;";
+  const resetAnnotationsTableSql =
+    "ALTER TABLE ANNOTATIONS AUTO_INCREMENT = 1;";
+  const clearSessionsTableSql = "DELETE FROM sessions;";
 
   try {
     // Clear in the order of ANNOTATIONS -> PROJECTS -> USERS due to foreign key constraints
     await conn.promise().query(clearAnnotationsTableSql);
-    console.log('ANNOTATIONS table cleared');
+    console.log("ANNOTATIONS table cleared");
 
     await conn.promise().query(resetAnnotationsTableSql);
-    console.log('ANNOTATIONS table pid autoincrement reset');
+    console.log("ANNOTATIONS table pid autoincrement reset");
 
     await conn.promise().query(clearProjectsTableSql);
-    console.log('PROJECTS table cleared');
+    console.log("PROJECTS table cleared");
 
     await conn.promise().query(resetProjectsTableSql);
-    console.log('PROJECTS table pid autoincrement reset');
+    console.log("PROJECTS table pid autoincrement reset");
 
     await conn.promise().query(clearUsersTableSql);
-    console.log('USERS table cleared');
+    console.log("USERS table cleared");
 
     await conn.promise().query(clearSessionsTableSql);
-    console.log('sessions table cleared');
-
+    console.log("sessions table cleared");
   } catch (err) {
-    console.log('Error clearing tables: ', err);
+    console.log("Error clearing tables: ", err);
   }
 }
 

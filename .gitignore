@@ -11,3 +11,4 @@ README-mia.md
 footnote-backend/.env
 footnote-backend/config/ca-certificate.crt
 
+node_modules
