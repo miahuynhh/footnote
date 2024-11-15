@@ -1,29 +1,34 @@
-import React, { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+import React, { useState, useRef, ChangeEvent } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import Annotation from "../components/Annotation/Annotation";
 import ReactPlayer from "react-player";
 import video from "../assets/dog.mp4"; // Default video (can be replaced after upload)
-import { ChangeEvent } from "react";
-import axios from "axios";
+import useProject from "../hooks/useProject";
 
 const AnnotationPage: React.FC = () => {
+  const navigate = useNavigate();
   const playerRef = useRef<ReactPlayer>(null);
 
-  const [title, setTitle] = useState<string>("Untitled");
+  const { pid } = useParams<"pid">(); // Get the project ID from the URL
+  const projectID = pid ? parseInt(pid, 10) : null; // Parse the project ID as a number
+
+  const { project, deleteProject, setProject } = useProject(projectID);
+
+  const [title, setTitle] = useState<string>(project?.title || "Untitled");
   const [timestamp, setTimestamp] = useState<number>(0);
-  const [videoUrl, setVideoUrl] = useState<string>(video); // State to hold the video URL
-  const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(false); // Track if video is uploaded
+  const [videoUrl, setVideoUrl] = useState<string>(project?.videoURL || video); // State to hold the video URL
+  const [isVideoUploaded, setIsVideoUploaded] = useState<boolean>(
+    !!project?.videoURL
+  ); // Track if video is uploaded
 
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // debouncing the POST request
-
-  let { pid } = useParams<"pid">();
 
   const handlePause = () => {
     if (playerRef.current) {
       const currentTime = playerRef.current.getCurrentTime();
       setTimestamp(currentTime);
-      console.log("Video paused at:", timestamp);
+      console.log("Video paused at:", currentTime);
     }
   };
 
@@ -37,51 +42,13 @@ const AnnotationPage: React.FC = () => {
 
     // Set a new timeout to update the debounced title after 1000ms
     debounceTimeout.current = setTimeout(() => {
-      if (pid) {
-        updateProjectName(event.target.value, pid); // Use projectId to update the project title
+      if (projectID) {
+        setProject((prev) =>
+          prev ? { ...prev, title: event.target.value } : null
+        );
+        // Add logic to update the title on the backend if needed
       }
     }, 1000);
-  };
-
-  // Send request to backend to update project name
-  const updateProjectName = async (newTitle: string, pid: string) => {
-    try {
-      console.log(newTitle);
-      await axios.put(
-        `http://localhost:3000/projects/edit-project-name`,
-        { projectName: newTitle, pid: pid },
-        { withCredentials: true }
-      );
-    } catch (error) {
-      console.error("Error updating project name: ", error);
-    }
-  };
-
-  // Send request to backend to update video upload
-  const updateVideoUpload = async (file: File, pid: string) => {
-    console.log(file);
-    try {
-      const formData = new FormData();
-      formData.append("video", file);
-      formData.append("pid", pid);
-
-      // Display the key/value pairs
-      for (var pair of formData.entries()) {
-        console.log(pair[0] + ", " + pair[1]);
-      }
-
-      console.log(formData);
-      await axios.post(`http://localhost:3000/videos/upload-video`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-        withCredentials: true,
-      });
-      console.log("Video uploaded successfully");
-    } catch (error) {
-      console.log(file);
-      console.error("Error uploading video: ", error);
-    }
   };
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -90,11 +57,25 @@ const AnnotationPage: React.FC = () => {
       const fileUrl = URL.createObjectURL(file); // Create a URL for the video file
       setVideoUrl(fileUrl);
       setIsVideoUploaded(true);
-      if (pid) {
-        updateVideoUpload(file, pid);
-      }
+      // Add logic to upload the file to the backend here if needed
     } else {
       alert("Please upload a valid MP4 file.");
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this project? This action is irreversible."
+    );
+    if (confirmDelete && projectID) {
+      try {
+        await deleteProject(); // Call the hook's deleteProject function
+        alert("Project deleted successfully!");
+        navigate("/"); // Navigate back to the home page after deletion
+      } catch (error) {
+        console.error("Error deleting project:", error);
+        alert("Failed to delete project. Please try again.");
+      }
     }
   };
 
@@ -187,13 +168,21 @@ const AnnotationPage: React.FC = () => {
             type="file"
             accept="video/mp4"
             onChange={handleFileUpload}
-            style={{ display: "none" }} // Hide the file input element, // TODO: the projectID should be retreived from the project page
+            style={{ display: "none" }} // Hide the file input element
           />
         </Col>
         <Col md={6}>
           <div className="w-100">
-            <Annotation projectID={0} />
+            <Annotation projectID={projectID || 0} />
           </div>
+        </Col>
+      </Row>
+
+      <Row className="mt-4">
+        <Col className="text-center">
+          <Button variant="danger" onClick={handleDeleteProject}>
+            Delete Project
+          </Button>
         </Col>
       </Row>
     </Container>
