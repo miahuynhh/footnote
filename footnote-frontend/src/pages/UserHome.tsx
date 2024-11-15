@@ -12,16 +12,16 @@
  * - Integrates navigation for creating and viewing individual projects.
  */
 import React from "react";
-import { useNavigate } from "react-router-dom"; // For navigation to project pages
-import Container from "react-bootstrap/Container"; // Bootstrap container for layout
-import Stack from "react-bootstrap/Stack"; // Bootstrap stack for horizontal layout
-import ProjectCard from "../components/ProjectCard"; // Reusable project card component
-import useProject from "../hooks/useProject"; // Custom hook to fetch user projects
-import { ProjectData } from "../types/types"; // Type definition for project data
-import mockProjects from "../data/mockProjects"; // Mock project data for fallback
-import axios from "axios"; // Axios for HTTP requests
-import { API_BASE_URL } from "../config"; // Base URL for API requests
-import NewProjectIMG from "../assets/footnote.png"; // Thumbnail image for creating a new project
+import { useNavigate } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Stack from "react-bootstrap/Stack";
+import ProjectCard from "../components/ProjectCard";
+import useProject from "../hooks/useProject";
+import { ProjectData } from "../types/types";
+import mockProjects from "../data/mockProjects";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
+import NewProjectIMG from "../assets/footnote.png";
 
 /**
  * UserHome is a React functional component that displays the user's project dashboard.
@@ -32,13 +32,13 @@ import NewProjectIMG from "../assets/footnote.png"; // Thumbnail image for creat
  */
 const UserHome: React.FC = () => {
   const { projects, loading, error } = useProject(); // Fetch projects using custom hook
-  const navigate = useNavigate(); // Hook for navigating between routes
+  const navigate = useNavigate();
 
   // Define the placeholder for the "Create a New Project" card
   const newProject: ProjectData = {
     id: 0,
     title: "Create a New Project",
-    thumbnailURL: NewProjectIMG, // Image asset for the card
+    thumbnailURL: NewProjectIMG,
     videoURL: "", // No associated video for new projects
   };
 
@@ -53,7 +53,7 @@ const UserHome: React.FC = () => {
         { withCredentials: true } // Include credentials (cookies) for authentication
       );
       const newPid = response.data.pid; // Extract the project ID from the response
-      console.log(newPid); // Log the new project ID for debugging
+      console.log(newPid);
       navigate(`/project/${newPid}`); // Navigate to the newly created project's page
     } catch (error) {
       console.error("Error creating a new project:", error); // Log the error for debugging
@@ -115,4 +115,4 @@ const UserHome: React.FC = () => {
   );
 };
 
-export default UserHome; // Export the component for use in routing
+export default UserHome;
