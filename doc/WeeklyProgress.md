@@ -13,6 +13,7 @@ Group hasn't been formed
 ## Assignment: Project pitch
 
 Initial meeting with team:
+
 - get to know each other and the project's main goals
 - discussed personal dev strengths
 
@@ -56,6 +57,7 @@ Initial meeting with team:
 - Showed team during weekly meeting and gathered feedback on the screens (getting rid of forgot password)
 
 #### Mia Huynh
+
 - Created the public GitHub repository, later changed to private, added members and TA
 - Purchased the footnote.us domain for team on GoDaddy
 - Delegated tasks for proposal and requirements assignment
@@ -79,7 +81,6 @@ Initial meeting with team:
 - Team decided to switch to javascript for backend. So, I deleted all spring stuff and generated express js.
 - Implemented video uploading logic in the backend and tested successfully with postman.
 - Wrote software architecture for software architecture. Shared with team and asked for their feedback.
-
 
 ---
 
@@ -324,6 +325,7 @@ Initial meeting with team:
 - Draft architecture diagram for presentation
 - Restructured documents and added a template for bug reports.
 - Integrated annotation component with backend.
+- Fixed bug and wrote detailed comment for my code so other teammates can easily use.
 
 ---
 

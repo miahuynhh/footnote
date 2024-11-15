@@ -57,12 +57,39 @@ const AnnotationPage: React.FC = () => {
     }
   };
 
+  // Send request to backend to update video upload
+  const updateVideoUpload = async (file: File) => {
+    console.log(file);
+    try {
+      const formData = new FormData();
+      formData.append("video", file);
+
+      // Display the key/value pairs
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+
+      console.log(formData);
+      await axios.post(`http://localhost:3000/videos/upload-video`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
+      console.log("Video uploaded successfully");
+    } catch (error) {
+      console.log(file);
+      console.error("Error uploading video: ", error);
+    }
+  };
+
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file.type === "video/mp4") {
       const fileUrl = URL.createObjectURL(file); // Create a URL for the video file
       setVideoUrl(fileUrl);
       setIsVideoUploaded(true);
+      updateVideoUpload(file);
     } else {
       alert("Please upload a valid MP4 file.");
     }
