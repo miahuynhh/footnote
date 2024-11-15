@@ -16,12 +16,12 @@ import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
 import ProjectCard from "../components/ProjectCard";
-import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
 import mockProjects from "../data/mockProjects";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import NewProjectIMG from "../assets/footnote.png";
+import useProjectList from "../hooks/useProjectList";
 
 /**
  * UserHome is a React functional component that displays the user's project dashboard.
@@ -31,7 +31,7 @@ import NewProjectIMG from "../assets/footnote.png";
  * @returns {JSX.Element} - The user home page.
  */
 const UserHome: React.FC = () => {
-  const { projects, loading, error } = useProject(); // Fetch projects using custom hook
+  const { projects, loading, error } = useProjectList(); // Fetch projects using custom hook
   const navigate = useNavigate();
 
   // Define the placeholder for the "Create a New Project" card
