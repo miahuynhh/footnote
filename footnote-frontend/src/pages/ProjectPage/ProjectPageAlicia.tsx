@@ -1,19 +1,20 @@
 /**
  * ProjectPage.tsx
  *
- * This file defines the `ProjectPage` React component, which serves as the main page
+ * This file defines the ProjectPage React component, which serves as the main page
  * for viewing and managing a specific project. It handles both new and existing projects.
  */
 
 import React, { useState, ChangeEvent } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import Header from "../components/Header";
-import VideoPlayer from "../components/VideoPlayer";
-import Annotation from "../components/Annotation/Annotation";
-import useProject from "../hooks/useProject";
+import Header from "../../components/Header/Header";
+import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
+import Annotation from "../../components/Annotation/Annotation";
+import useProject from "../../hooks/useProject";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../../config";
+import "./ProjectPage.css";
 
 const ProjectPage: React.FC = () => {
   const { projectID } = useParams<{ projectID: string }>(); // Get projectID from URL
@@ -95,7 +96,7 @@ const ProjectPage: React.FC = () => {
     <section id="project-page" className="block project-page-block">
       <Container>
         {/* Header Section */}
-        <Row>
+        <Row className="xxl">
           <Col>
             <Header
               title={project?.title || "Untitled Project"}
@@ -112,6 +113,10 @@ const ProjectPage: React.FC = () => {
                 <VideoPlayer
                   projectID={project?.id || 0}
                   videoURL={videoUrl || ""}
+                  onVideoUploaded={(newVideoURL: string) => {
+                    setVideoUrl(newVideoURL);
+                    setIsVideoUploaded(true);
+                  }}
                 />
               ) : (
                 <div>

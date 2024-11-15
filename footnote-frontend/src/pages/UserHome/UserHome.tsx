@@ -15,13 +15,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Stack from "react-bootstrap/Stack";
-import ProjectCard from "../components/ProjectCard";
-import { ProjectData } from "../types/types";
-import mockProjects from "../data/mockProjects";
+import ProjectCard from "../../components/ProjectCard/ProjectCard";
+import { ProjectData } from "../../types/types";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
-import NewProjectIMG from "../assets/footnote.png";
-import useProjectList from "../hooks/useProjectList";
+import { API_BASE_URL } from "../../config";
+import NewProjectIMG from "../../assets/footnote.png";
+import useProjectList from "../../hooks/useProjectList";
 
 /**
  * UserHome is a React functional component that displays the user's project dashboard.
@@ -56,12 +55,9 @@ const UserHome: React.FC = () => {
       console.log(newPid);
       navigate(`/project/${newPid}`); // Navigate to the newly created project's page
     } catch (error) {
-      console.error("Error creating a new project:", error); // Log the error for debugging
+      console.error("Error creating a new project:", error);
     }
   };
-
-  // Determine whether to show mock projects (if loading is complete and there is an error)
-  const shouldShowMockProjects = !loading && error;
 
   return (
     <section id="homepage" className="block homepage-block">
@@ -90,25 +86,15 @@ const UserHome: React.FC = () => {
             />
           </div>
           {/* Display mock projects or fetched projects */}
-          {shouldShowMockProjects
-            ? mockProjects.map((project) => (
-                <div key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    buttonText="View Project"
-                    onClick={() => navigate(`/project/${project.id}`)} // Navigate to the project's page
-                  />
-                </div>
-              ))
-            : projects.map((project) => (
-                <div key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    buttonText="View Project"
-                    onClick={() => navigate(`/project/${project.id}`)} // Navigate to the project's page
-                  />
-                </div>
-              ))}
+          {projects.map((project) => (
+            <div key={project.id}>
+              <ProjectCard
+                project={project}
+                buttonText="View Project"
+                onClick={() => navigate(`/project/${project.id}`)} // Navigate to the project's page
+              />
+            </div>
+          ))}
         </Stack>
       </Container>
     </section>

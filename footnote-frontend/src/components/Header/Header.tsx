@@ -1,15 +1,3 @@
-/**
- * Header.tsx
- *
- * This file defines the `Header` React component, which displays the project title
- * and allows the user to edit it by clicking on the title.
- *
- * Features:
- * - Displays the current project title.
- * - Allows inline editing of the title with a save-on-blur or Enter key.
- * - Calls a callback to save the updated title in the parent component.
- */
-
 import React, { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 
@@ -71,7 +59,6 @@ const Header: React.FC<HeaderProps> = ({ title, onTitleChange }) => {
           onClick={() => setIsEditing(true)} // Enter edit mode on click
           onMouseOver={(e) => e.currentTarget.classList.add("hovered")} // Add hover styling
           onMouseOut={(e) => e.currentTarget.classList.remove("hovered")} // Remove hover styling
-          style={{ cursor: "pointer" }}
         >
           {editableTitle || "Untitled Project"}
         </h1>

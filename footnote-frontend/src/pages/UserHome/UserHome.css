@@ -1,0 +1,59 @@
+/* UserHome Component Styling */
+
+/* Main section styling */
+#homepage {
+  padding: 20px;
+  background-color: var(--bs-light, #f8f9fa); /* Light background */
+}
+
+/* Title holder styling */
+#homepage .title-holder {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+#homepage .title-holder h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--bs-dark, #343a40); /* Dark color */
+  border-bottom: 3px solid var(--bs-primary, #0d6efd); /* Primary color underline */
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+/* Error message styling */
+#homepage .text-danger {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Project cards container */
+#homepage .project-cards {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  margin-top: 20px;
+}
+
+/* Individual project card wrapper */
+.project-card-wrapper {
+  width: 300px; /* Set a consistent card width */
+}
+
+/* New project card styling */
+.project-card-wrapper .new-project {
+  border: 2px dashed var(--bs-primary, #0d6efd); /* Dashed border for new project card */
+  background-color: #ffffff; /* White background */
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.project-card-wrapper .new-project:hover {
+  background-color: var(--bs-primary, #0d6efd);
+  color: #ffffff; /* Invert text color on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}

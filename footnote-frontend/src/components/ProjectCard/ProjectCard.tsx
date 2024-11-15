@@ -13,7 +13,7 @@
  * - Consistent Bootstrap styling using `react-bootstrap` components.
  */
 import React from "react";
-import { ProjectData } from "../types/types"; // Type definition for project data
+import { ProjectData } from "../../types/types"; // Type definition for project data
 import Card from "react-bootstrap/Card"; // Bootstrap Card component for styling
 import Button from "react-bootstrap/Button"; // Bootstrap Button component for styling
 

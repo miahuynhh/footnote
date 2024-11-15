@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import ReactPlayer from "react-player"; // Import ReactPlayer for video playback
 import { Container, Form } from "react-bootstrap"; // Bootstrap for styling
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../../config";
 
 interface VideoPlayerProps {
   projectID: number; // ID of the project associated with the video
