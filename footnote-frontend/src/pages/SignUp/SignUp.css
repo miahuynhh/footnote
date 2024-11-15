@@ -1,13 +1,31 @@
-.container{
+.container {
     display: flex;
     flex-direction: column;
+    justify-content: center;  /* Center vertically */
+    align-items: center;      /* Center horizontally */
     margin: auto;
-    margin-top: 200px;
-    width: 600px;
+    margin-top: 100px; /* Adjust top margin */
+    width: 500px; /* Optional: You can adjust this width */
     background: #ffff;
-    padding-bottom: 30px;
+    padding: 30px;
 }
 
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Use full width of the container */
+    max-width: 600px; /* Set a max width */
+    background: #ffff;
+    padding: 30px; /* Padding around the sign-in form */
+    border-radius: 10px; /* Rounded corners for the inner container */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Shadow around the sign-in form */
+  }
+  
+  .form-container:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); /* Hover effect for stronger shadow */
+  }
+  
 .header{
     display: flex;
     flex-direction: column;

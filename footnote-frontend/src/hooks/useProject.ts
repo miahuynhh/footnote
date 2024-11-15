@@ -47,7 +47,7 @@ const useProject = (projectID: number | null) => {
         withCredentials: true,
       });
       setProject(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (err.response?.status === 404) {
         setProject({
           id,
@@ -97,9 +97,9 @@ const useProject = (projectID: number | null) => {
         { withCredentials: true }
       );
 
-      // Post the data to create the new project
-      const { data: newProject } = await axios.post(
-        `${API_BASE_URL}/projects/create-project`,
+      // Put the data to create the new project
+      const { data: newProject } = await axios.put(
+        `${API_BASE_URL}/projects/${newProjectID}`,
         projectData,
         { withCredentials: true }
       );

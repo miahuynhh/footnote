@@ -70,6 +70,7 @@ export const SignUp: React.FC = () => {
   return (
     <div className="container">
       {/* Header section with current action text and underline */}
+      <div className="form-container">
       <form action="POST">
         <div className="header">
           <div className="text">Sign Up</div>
@@ -135,6 +136,7 @@ export const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 };

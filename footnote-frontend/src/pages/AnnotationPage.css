@@ -35,11 +35,27 @@
   border-radius: 9px;
 }
 
+.input-field {
+  font-size: 48px;
+  font-weight: 650;
+  color: #3c009d;
+  background-color: transparent;
+  border: none;
+  width: 400px;
+  outline: none; /* Removes the default focus outline */
+}
+
+.input-field:focus {
+  box-shadow: 0 0 5px rgba(60, 0, 157, 0.5); /* Optional custom focus effect */
+}
+
 /* Main content section */
 .row {
   display: flex;
   flex-wrap: wrap;
 }
+
+
 
 /* Left Half - Placeholder for Video Player */
 .left-half {
@@ -50,6 +66,18 @@
   padding: 20px;
   border-right: 2px solid #eaeaea;
 }
+
+
+.underline{
+  width: 61px;
+  height: 6px;
+  background: #3c009d;
+  border-radius: 9px;
+}
+
+/* .upload-video {
+  !important margin-top: 90px; 
+} */
 
 .placeholder-video {
   text-align: center;
