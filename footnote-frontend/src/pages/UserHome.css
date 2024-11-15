@@ -1,0 +1,56 @@
+.page-border-wrapper {
+    border: 3px solid #3c009d;
+    /* Adds a border around the entire page */
+    border-radius: 10px;
+    /* Optional: Rounded corners */
+    padding: 20px;
+    /* Space between the border and the content */
+    margin: 10px;
+    /* Space between the border and the viewport edges */
+}
+
+.page-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.text {
+    color: #3c009d;
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.underline {
+    width: 61px;
+    height: 6px;
+    background: #3c009d;
+    border-radius: 9px;
+}
+
+.hstack {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto;
+    /* Enable horizontal scrolling if necessary */
+    padding: 10px 0;
+}
+
+.gap-3>div {
+    margin-right: 18px;
+    /* Spacing between project cards */
+}
+
+.spacer {
+    flex: 0 0 20px;
+    /* Fixed spacer width for space to the left of "Create New Project" card */
+}

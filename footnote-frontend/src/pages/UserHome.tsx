@@ -1,23 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Stack from "react-bootstrap/Stack";
 import ProjectCard from "../components/ProjectCard";
 import useProject from "../hooks/useProject";
 import { ProjectData } from "../types/types";
-import mockProjects from "../data/mockProjects";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 
 const UserHome: React.FC = () => {
-  const { projects, loading, error } = useProject();
+  const { projects, error } = useProject();
   const navigate = useNavigate();
 
   const newProject: ProjectData = {
     id: 0,
-    title: "Create a New Project",
+    title: "Create Project",
     thumbnailURL:
-      "https://cdn.discordapp.com/attachments/1264335829665448039/1306489603632398408/file-hu0jIFPQTu4pGA4RKhIGQqCY.png?ex=6736dac2&is=67358942&hm=5d6e5dc2f35129437af8b401553b68e6e4a4183027e91fe80c4b76d6563f8521&",
+      "https://private-user-images.githubusercontent.com/67350424/386543382-e9379069-cf91-4fac-8d67-fe5ff79a129c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzE2NjM3NzAsIm5iZiI6MTczMTY2MzQ3MCwicGF0aCI6Ii82NzM1MDQyNC8zODY1NDMzODItZTkzNzkwNjktY2Y5MS00ZmFjLThkNjctZmU1ZmY3OWExMjljLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDExMTUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQxMTE1VDA5Mzc1MFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTdkODQyYWE2MWU3MmE5ZWU4MmVlOTk1YzcwYjhkMmYyNDM5NzQ0YTY5YmIyMjhkZmU3N2Y2ZjhhZDQ2NjBhOTUmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.7LPXA86cyl539RKpVWveJ3qyq8VTo2mb4YIGaJLX9Ls",
     videoURL: "",
   };
 
@@ -35,54 +32,45 @@ const UserHome: React.FC = () => {
     }
   };
 
-  const shouldShowMockProjects = !loading && error;
-  // const shouldShowMockProjects = !loading && (error || projects.length === 0);
-
   return (
     <section id="homepage" className="block homepage-block">
-      <Container>
-        <div className="title-holder">
-          <h1 className="text-center mb-4">Project Home</h1>
-        </div>
-        {error && (
-          <p className="text-center text-danger">
-            Unable to fetch projects. Showing mock projects instead.
-          </p>
-        )}
-        <Stack
-          direction="horizontal"
-          gap={3}
-          className="justify-content-center"
-          style={{ width: "100%", flexWrap: "nowrap" }}
-        >
-          <div>
-            <ProjectCard
-              project={newProject}
-              buttonText="Create New Project"
-              onClick={handleCreateNewProject}
-            />
+      <div className="page-border-wrapper"> {/* Container with border */}
+        <div className="page-content"> {/* Inner content container */}
+          <div className="header">
+            <div className="text">Home</div>
+            <div className="underline" />
+            <div className="underline-gap" style={{ marginTop: "40px" }}> {/* New gap element */}</div>
           </div>
-          {shouldShowMockProjects
-            ? mockProjects.map((project) => (
-                <div key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    buttonText="View Project"
-                    onClick={() => navigate(`/project/${project.id}`)}
-                  />
-                </div>
-              ))
-            : projects.map((project) => (
-                <div key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    buttonText="View Project"
-                    onClick={() => navigate(`/project/${project.id}`)}
-                  />
-                </div>
-              ))}
-        </Stack>
-      </Container>
+
+          {error && (
+            <p className="text-center text-danger">
+              Unable to fetch projects. Showing mock projects instead.
+            </p>
+          )}
+
+          <div className="hstack gap-3"> {/* Container for project cards */}
+            <div className="spacer"></div> {/* Spacer for left padding */}
+            <div>
+              <ProjectCard
+                project={newProject}
+                onClick={handleCreateNewProject}
+              />
+            </div>
+            {projects.length > 0 && (
+              <>
+                {projects.map((project) => (
+                  <div key={project.id}>
+                    <ProjectCard
+                      project={project}
+                      onClick={() => navigate(`/project/${project.id}`)}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

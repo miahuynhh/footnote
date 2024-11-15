@@ -1,0 +1,38 @@
+.project-card {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    /* Adjust width as needed */
+    background-color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    /* Sets cursor to pointer on hover */
+    margin: 10px;
+    /* Adjust margin as needed */
+    
+    
+}
+
+.project-card img {
+    width: 100%;
+    /* Stretches image to fill card width */
+    height: 250px;
+    /* Adjust height as needed */
+    object-fit: cover;
+    /* Ensures image fills the space and avoids distortion */
+    border-radius: 10px;
+    box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.1s ease-in-out;
+}
+
+.project-title {
+    padding: 10px;
+    /* Adjust padding as needed */
+    font-size: 22px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.project-card img:hover {
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+  }
