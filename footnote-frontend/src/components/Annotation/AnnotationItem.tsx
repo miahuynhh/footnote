@@ -30,7 +30,7 @@
  *     timestamp: "1:30",
  *     text: "This is an annotation",
  *     projectID: 123
- * 
+ *
  *   }}
  *   onEditSave={(id, newText, projectId) => console.log(id, newText, projectId)}
  *   onDeleteClick={(id, projectId) => console.log(id, projectId)}
@@ -43,8 +43,8 @@ import React, { useState } from "react";
 import { Button, FormControl, InputGroup } from "react-bootstrap";
 import AnnotationBaseItem from "./AnnotationBaseItem";
 import { AnnotationData } from "../../types/types";
-import TrashIcon from "../../assets/trash3-fill.svg";
-import EditIcon from "../../assets/pencil-square.svg";
+import TrashIcon from "../../assets/trash.png";
+import EditIcon from "../../assets/pen.png";
 
 interface AnnotationItemProps {
   timestamp: number;
@@ -76,49 +76,52 @@ const AnnotationItem: React.FC<AnnotationItemProps> = ({
   };
 
   return (
-    <AnnotationBaseItem
-      timestamp={annotation.timestampStr}
-      timestampNum={annotation.timestampNum}
-      onTimestampClick={onTimestampClick}
-    >
-      {isEditing ? (
-        <InputGroup>
-          <FormControl
-            value={editText}
-            onChange={(e) => setEditText(e.target.value)}
-            onBlur={handleEditSave}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleEditSave();
-              if (e.key === "Escape") handleEditCancel();
-            }}
-            placeholder="Edit annotation"
-            autoFocus
-          />
-        </InputGroup>
-      ) : (
-        <span style={{color: 'white'}}>{annotation.text}</span>
-      )}
+    <div className="annotation-item">
+      <AnnotationBaseItem
+        timestamp={annotation.timestampStr}
+        timestampNum={annotation.timestampNum}
+        onTimestampClick={onTimestampClick}
+      >
+        {isEditing ? (
+          <InputGroup>
+            <FormControl
+              className="no-border-shadow"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              onBlur={handleEditSave}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleEditSave();
+                if (e.key === "Escape") handleEditCancel();
+              }}
+              placeholder="Edit annotation"
+              autoFocus
+            />
+          </InputGroup>
+        ) : (
+          <span className="annotation-text">{annotation.text}</span>
+        )}
 
-      {!isEditing && (
-        <div>
-          <Button
-            variant="link"
-            onClick={() => setIsEditing(true)}
-            className="p-0 mx-2"
-          >
-            <img src={EditIcon} alt="Edit" width={16} height={16} />
-          </Button>
+        {!isEditing && (
+          <div>
+            <Button
+              variant="link"
+              onClick={() => setIsEditing(true)}
+              className="p-0 mx-2"
+            >
+              <img src={EditIcon} alt="Edit" width={16} height={16} />
+            </Button>
 
-          <Button
-            variant="link"
-            onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
-            className="p-0"
-          >
-            <img src={TrashIcon} alt="Delete" width={16} height={16} />
-          </Button>
-        </div>
-      )}
-    </AnnotationBaseItem>
+            <Button
+              variant="link"
+              onClick={() => onDeleteClick(annotation.id, annotation.projectID)}
+              className="p-0"
+            >
+              <img src={TrashIcon} alt="Delete" width={16} height={16} />
+            </Button>
+          </div>
+        )}
+      </AnnotationBaseItem>
+    </div>
   );
 };
 

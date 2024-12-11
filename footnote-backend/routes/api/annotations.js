@@ -12,6 +12,7 @@ const {
   GET_ANNOTATIONS_BY_PID,
   INSERT_ANNOTATION,
   UPDATE_ANNOTATION,
+  FAVORITE_ANNOTATION,
   DELETE_ANNOTATION_BY_AID,
 } = require("../../queries/sqlConstants");
 
@@ -95,6 +96,31 @@ router.put("/edit", async (req, res) => {
 });
 
 /**
+ * Endpoint: PUT /annotations/favorite
+ *
+ * Favorites or unfavorites an existing annotation. Only accessible to logged-in users.
+ *
+ * @param {Object} req - Express request object, must contain id, favorite, and projectID in the body.
+ * @param {Object} res - Express response object.
+ * @returns {Object} An empty object if the annotation was updated successfully, or an error message.
+ */
+router.put("/favorite", async (req, res) => {
+  if (!req.session.isLoggedIn || !req.session.username) {
+    return res.status(401).send("Unauthorized, please log in");
+  }
+
+  const { id, favorite, projectID } = req.body;
+
+  try {
+    await favoriteAnnotation(id, favorite, projectID);
+    res.send({});
+  } catch (err) {
+    console.log("Error favoriting or unfavoriting annotation: ", err);
+    res.status(500).send("Error favoriting or unfavoriting annotation");
+  }
+});
+
+/**
  * Endpoint: DELETE /annotations/delete
  *
  * Deletes an annotation given its ID. Only accessible to logged-in users.
@@ -134,12 +160,13 @@ async function getAnnotations(pid) {
     if (rows.length === 0) {
       return [];
     } else {
-      // extract the aid, timestamp, and text
+      // extract the aid, timestamp, text, and favorite
       return rows.map((row) => ({
         id: row.aid,
         timestampStr: row.timestampStr,
         timestampNum: row.timestampNum,
         text: row.text,
+        favorite: row.favorite,
       }));
     }
   } catch (err) {
@@ -200,6 +227,31 @@ async function editAnnotation(aid, text, projectID) {
   } catch (err) {
     console.error("Error editing annotation", err);
     return "Error editing annotation";
+  }
+}
+
+/**
+ * Edits an existing annotation.
+ *
+ * @param {number} aid - The annotation ID to be updated.
+ * @param {number} favorite - The new favorite value (0 for unfavorite or 1 for favorite) for the annotation.
+ * @param {number} projectID - The project ID associated with the annotation.
+ * @returns {void} Returns nothing if successful, otherwise throws an error.
+ */
+async function favoriteAnnotation(aid, favorite, projectID) {
+  try {
+    const [result] = await conn
+      .promise()
+      .query(FAVORITE_ANNOTATION, [favorite, aid]);
+
+    if (result.affectedRows > 0) {
+      return;
+    } else {
+      throw new Error("Annotation not found or not updated");
+    }
+  } catch (err) {
+    console.error("Error favoriting or unfavoriting annotation", err);
+    return "Error favoriting or unfavoriting annotation";
   }
 }
 

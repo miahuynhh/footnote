@@ -42,7 +42,7 @@ const CREATE_PROJECTS_TABLE = `
 /**
  * SQL query to create the ANNOTATIONS table.
  * The table stores annotations for each project, including the unique annotation id,
- * timestamp and text data, with a foreign key reference to the PROJECTS table.
+ * timestamp and text data, favorite field (0 or 1), with a foreign key reference to the PROJECTS table.
  * The table is suffixed based on the environment (e.g., dev).
  */
 const CREATE_ANNOTATIONS_TABLE = `
@@ -51,6 +51,7 @@ const CREATE_ANNOTATIONS_TABLE = `
     timestampStr VARCHAR(256),
     timestampNum DOUBLE,
     text VARCHAR(1000),
+    favorite INT DEFAULT 0,
     pid INT NOT NULL,
     FOREIGN KEY (pid) REFERENCES PROJECTS_${tableSuffix}(pid)
   );
@@ -143,9 +144,9 @@ const DELETE_ANNOTATIONS_BY_PID = `DELETE FROM ANNOTATIONS_${tableSuffix} WHERE 
 
 /**
  * SQL query to get all annotations for a specific project by its project ID.
- * This query retrieves the annotation details (aid, timestampStr, timestampNum, text) for the specified project.
+ * This query retrieves the annotation details (aid, timestampStr, timestampNum, text, favorite) for the specified project.
  */
-const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestampStr, timestampNum, text FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
+const GET_ANNOTATIONS_BY_PID = `SELECT aid, timestampStr, timestampNum, text, favorite FROM ANNOTATIONS_${tableSuffix} WHERE pid = ?;`;
 
 /**
  * SQL query to insert a new annotation into the ANNOTATIONS table.
@@ -158,6 +159,12 @@ const INSERT_ANNOTATION = `INSERT INTO ANNOTATIONS_${tableSuffix} (timestampStr,
  * This query modifies the text of an annotation specified by its annotation ID.
  */
 const UPDATE_ANNOTATION = `UPDATE ANNOTATIONS_${tableSuffix} SET text = ? WHERE aid = ?;`;
+
+/**
+ * SQL query to update an existing annotation's favorite field in the ANNOTATIONS table.
+ * This query modifies the favorite field of an annotation specified by its annotation ID.
+ */
+const FAVORITE_ANNOTATION = `UPDATE ANNOTATIONS_${tableSuffix} SET favorite = ? WHERE aid = ?;`;
 
 /**
  * SQL query to delete an annotation from the ANNOTATIONS table by its annotation ID.
@@ -190,5 +197,6 @@ module.exports = {
   GET_ANNOTATIONS_BY_PID,
   INSERT_ANNOTATION,
   UPDATE_ANNOTATION,
+  FAVORITE_ANNOTATION,
   DELETE_ANNOTATION_BY_AID,
 };

@@ -27,7 +27,6 @@
 import React, { ReactNode } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 
-
 interface AnnotationBaseItemProps {
   timestamp: string; // Timestamp to display
   timestampNum: number;
@@ -46,7 +45,12 @@ const AnnotationBaseItem: React.FC<AnnotationBaseItemProps> = ({
       as="li"
       className="d-flex justify-content-between align-items-center"
     >
-      <Button variant="link" onClick={() => onTimestampClick(timestampNum)} className="p-0" style={{color: 'white'}}>
+      <Button
+        className="annotation-timestamp"
+        variant="link"
+        onClick={() => onTimestampClick(timestampNum)}
+        style={{ paddingTop: "2px", paddingBottom: "2px" }}
+      >
         <strong>{timestamp}</strong>
       </Button>
       {children}
