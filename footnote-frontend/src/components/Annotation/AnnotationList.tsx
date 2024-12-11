@@ -58,18 +58,20 @@ const AnnotationList: React.FC<AnnotationListProps> = ({
   timestamp,
 }) => {
   return (
-    <ul>
+    <ul style={{ paddingLeft: "0", paddingRight: "7px" }}>
       {/* Render each annotation */}
-      {annotations.sort((a, b) => a.timestampNum - b.timestampNum).map((annotation) => (
-        <AnnotationItem
-          timestamp={annotation.timestampNum}
-          key={annotation.id}
-          annotation={annotation}
-          onEditSave={(id, newText) => onEditSave(id, newText, projectID)}
-          onDeleteClick={(id) => onDeleteClick(id, projectID)}
-          onTimestampClick={onTimestampClick}
-        />
-      ))}
+      {annotations
+        .sort((a, b) => a.timestampNum - b.timestampNum)
+        .map((annotation) => (
+          <AnnotationItem
+            timestamp={annotation.timestampNum}
+            key={annotation.id}
+            annotation={annotation}
+            onEditSave={(id, newText) => onEditSave(id, newText, projectID)}
+            onDeleteClick={(id) => onDeleteClick(id, projectID)}
+            onTimestampClick={onTimestampClick}
+          />
+        ))}
 
       {/* Render the input for adding new annotations */}
       <NewAnnotationItem

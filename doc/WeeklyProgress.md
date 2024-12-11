@@ -505,6 +505,13 @@ Initial meeting with team:
 #### Mia Huynh
 
 - Added more styling for ProjectPage
+  - Overall background, components layout and spacing, shadow on hovers
+  - Scrollable annotation component - the component no longer overflows when many annotations are created
+  - Designed and added new y2k styling: edit icon, delete icon, annotation pixel window, Home button, Delete button
+  - Styled AnnotationItem, NewAnnotationItem, AnnotationList, Video placeholder
+  - Removed the unneeded check button for saving an annotation (just press Enter instead)
+  - Designed a welcome message that pops up when no video is uploaded prompting user to import a video, a user can press a close button to close the window
+- Made sure password icons on login/signup page have transparent background
 - Updated documentation:
   - doc files
     - DeveloperGuidelines.md, especially build steps
@@ -520,6 +527,8 @@ Initial meeting with team:
     - videos.js
     - users.js
     - s3Service.js
+- Delegated sections and tasks for member for the final presentation
+- Cleaned up DigitalOcean Spaces: removed unnecessary testing/development videos/thumbnails
 
 #### Alicia Z.
 

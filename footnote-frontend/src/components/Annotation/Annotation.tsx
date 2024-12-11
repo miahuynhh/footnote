@@ -9,9 +9,9 @@
  * Props:
  * - `projectID` (number): The unique identifier for the project whose annotations
  *   are being managed.
- * - `timestamp` (number): The most recent timestamp from the video player 
+ * - `timestamp` (number): The most recent timestamp from the video player
  * - `onTimestampClick` (function): A callback function for how to handle the timestamp
- * button in subcomponent. 
+ * button in subcomponent.
  *
  * Behavior:
  * - While data is loading, a "Loading..." message is displayed.

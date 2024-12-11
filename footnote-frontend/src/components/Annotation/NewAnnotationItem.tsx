@@ -6,11 +6,11 @@
  * consistent styling and structure.
  *
  * Props:
-* - `timestamp` (number): The numerical value of the timestamp associated with
+ * - `timestamp` (number): The numerical value of the timestamp associated with
  * the annotation
  * - `onAddAnnotation` (function): Callback to handle adding a new annotation.
  *   Receives the new annotation text as an argument.
-* - `onTimestampClick` (function, optional): Callback executed when the timestamp
+ * - `onTimestampClick` (function, optional): Callback executed when the timestamp
  *   button is clicked.
  *
  * Behavior:
@@ -25,11 +25,8 @@
  */
 
 import React, { useState } from "react";
-import { Button, InputGroup, FormControl } from "react-bootstrap";
+import { InputGroup, FormControl } from "react-bootstrap";
 import AnnotationBaseItem from "./AnnotationBaseItem";
-import CheckIcon from "../../assets/check-square-fill.svg";
-// import { none } from "@cloudinary/url-gen/qualifiers/fontHinting";
-// import { AnnotationData } from "../../types/types";
 
 interface NewAnnotationItemProps {
   timestamp: number;
@@ -52,28 +49,26 @@ const NewAnnotationItem: React.FC<NewAnnotationItemProps> = ({
   };
 
   return (
-    <AnnotationBaseItem
-      timestamp="00:00"
-      timestampNum={0}
-      onTimestampClick={() => onTimestampClick(timestamp)}
-    >
-      {/* Input field for new annotation */}
-      <InputGroup>
-        <FormControl
-          value={newAnnotation}
-          onChange={(e) => setNewAnnotation(e.target.value)}
-          placeholder="new annotation"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleAddAnnotation();
-          }}
-        />
-      </InputGroup>
-
-      {/* Save button */}
-      <Button variant="link" onClick={handleAddAnnotation} className="p-0">
-        <img src={CheckIcon} alt="Save" width={16} height={16} />
-      </Button>
-    </AnnotationBaseItem>
+    <div className="annotation-item">
+      <AnnotationBaseItem
+        timestamp="00:00"
+        timestampNum={0}
+        onTimestampClick={() => onTimestampClick(timestamp)}
+      >
+        {/* Input field for new annotation */}
+        <InputGroup>
+          <FormControl
+            className="no-border-shadow"
+            value={newAnnotation}
+            onChange={(e) => setNewAnnotation(e.target.value)}
+            placeholder="new annotation"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleAddAnnotation();
+            }}
+          />
+        </InputGroup>
+      </AnnotationBaseItem>
+    </div>
   );
 };
 
